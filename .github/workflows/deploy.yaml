@@ -48,7 +48,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Deploy Worker to Cloudflare
-        uses: cloudflare/wrangler-action@1.1.0
+        uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           environment: production
