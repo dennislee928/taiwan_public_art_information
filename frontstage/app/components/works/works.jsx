@@ -11,9 +11,7 @@ const PublicArtComponent = () => {
     // Fetch data using axios
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          "https://publicart.taichung.gov.tw/_DataAction/"
-        );
+        const response = await axios.get("http://localhost:3001/api/publicart");
         setData(response.data);
       } catch (error) {
         setError(error);
