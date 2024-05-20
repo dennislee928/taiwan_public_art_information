@@ -36,7 +36,7 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           projectName: taiwan-public-art-information
-          directory: .nuxt
+          directory: .opt
 
   deploy_worker:
     runs-on: ubuntu-latest
