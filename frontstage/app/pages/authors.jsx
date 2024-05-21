@@ -1,6 +1,6 @@
 import React from "react";
 
-function authors() {
+function Authors() {
   return (
     <>
       <div>雷霆犀利俠</div>
@@ -9,4 +9,4 @@ function authors() {
   );
 }
 
-export default authors;
+export default Authors;
