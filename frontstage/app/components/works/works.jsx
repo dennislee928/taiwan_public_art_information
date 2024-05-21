@@ -19,7 +19,8 @@ const PublicArtComponent = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get("http://localhost:3001/api/publicart");
-        setData(response.data);
+        console.log(response.data);
+        setData(Array.isArray(response.data) ? response.data : []);
       } catch (error) {
         setError(error);
       } finally {
@@ -36,12 +37,13 @@ const PublicArtComponent = () => {
       [e.target.name]: e.target.value,
     });
   };
-
+  //
+  const [filteredData, setFilteredData] = useState([]);
+  //
   const handleSearch = () => {
     setLoading(true);
     try {
-      // Filter data based on input
-      const filteredData = data.filter(
+      const results = data.filter(
         (item) =>
           (!filters.district || item.district.includes(filters.district)) &&
           (!filters.name || item.name.includes(filters.name)) &&
@@ -51,7 +53,7 @@ const PublicArtComponent = () => {
           (!filters.type || item.type.includes(filters.type)) &&
           (!filters.manager || item.manager.includes(filters.manager))
       );
-      setData(filteredData);
+      setFilteredData(results);
     } catch (error) {
       setError(error);
     } finally {
@@ -78,7 +80,7 @@ const PublicArtComponent = () => {
         <button onClick={handleSearch}>Search</button>
       </div>
       <div>
-        {data.map((item, index) => (
+        {filteredData.map((item, index) => (
           <div
             key={index}
             style={{
