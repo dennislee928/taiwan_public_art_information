@@ -23,7 +23,9 @@ function Navbar() {
             <a href="/authors">作者</a>
           </li>
           <li>
-            <a href="/contributors">貢獻者</a>
+            <a href="https://www.taichung.gov.tw/8868/9948/10041/722369/post">
+              API提供者
+            </a>
           </li>
         </ul>
       </div>
