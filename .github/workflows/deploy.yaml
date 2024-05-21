@@ -42,8 +42,7 @@ jobs:
 
 deploy_worker:
   runs-on: ubuntu-latest
-  needs: build
-
+  needs: build_and_deploy
   steps:
     - name: Checkout repository
       uses: actions/checkout@v2
@@ -52,6 +51,7 @@ deploy_worker:
       uses: cloudflare/wrangler-action@v3
       with:
         apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-        environment: production
+        accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        command: wrangler publish
       env:
         CF_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
