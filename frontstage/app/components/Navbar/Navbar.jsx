@@ -19,9 +19,7 @@ function Navbar() {
           <li>
             <a href="/">首頁</a>
           </li>
-          <li>
-            <a href="/authors">作者</a>
-          </li>
+
           <li>
             <a href="https://www.taichung.gov.tw/8868/9948/10041/722369/post">
               API提供者

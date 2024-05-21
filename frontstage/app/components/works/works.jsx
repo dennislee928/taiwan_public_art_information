@@ -1,21 +1,25 @@
-"use client";
 import React, { useState, useEffect } from "react";
-import axios from "axios"; // Import axios
+import axios from "axios";
 
 const PublicArtComponent = () => {
-  const [data, setData] = useState(null);
+  const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [filters, setFilters] = useState({
+    district: "",
+    name: "",
+    creator: "",
+    year: "",
+    place: "",
+    type: "",
+    manager: "",
+  });
 
   useEffect(() => {
-    // Fetch data using axios
     const fetchData = async () => {
       try {
         const response = await axios.get("http://localhost:3001/api/publicart");
-        const sanitizedData = sanitizeJSON(response.data);
-        const jsonData = JSON.parse(sanitizedData); // Parse JSON string into object
-        const rowData = jsonData?.GenericData?.Dataset?.ROW || [];
-        setData(rowData);
+        setData(response.data);
       } catch (error) {
         setError(error);
       } finally {
@@ -25,18 +29,54 @@ const PublicArtComponent = () => {
 
     fetchData();
   }, []);
-  //
-  const sanitizeJSON = (jsonString) => {
-    // Remove invalid characters from JSON string
-    return jsonString.replace(/[\u0000-\u001F\u007F-\u009F]/g, "");
+
+  const handleChange = (e) => {
+    setFilters({
+      ...filters,
+      [e.target.name]: e.target.value,
+    });
   };
-  //
+
+  const handleSearch = () => {
+    setLoading(true);
+    try {
+      // Filter data based on input
+      const filteredData = data.filter(
+        (item) =>
+          (!filters.district || item.district.includes(filters.district)) &&
+          (!filters.name || item.name.includes(filters.name)) &&
+          (!filters.creator || item.creator.includes(filters.creator)) &&
+          (!filters.year || item.year.toString().includes(filters.year)) &&
+          (!filters.place || item.place.includes(filters.place)) &&
+          (!filters.type || item.type.includes(filters.type)) &&
+          (!filters.manager || item.manager.includes(filters.manager))
+      );
+      setData(filteredData);
+    } catch (error) {
+      setError(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
 
   return (
     <div>
       <h1>Public Art Information</h1>
+      <div>
+        {Object.keys(filters).map((key) => (
+          <input
+            key={key}
+            name={key}
+            value={filters[key]}
+            onChange={handleChange}
+            placeholder={key}
+          />
+        ))}
+        <button onClick={handleSearch}>Search</button>
+      </div>
       <div>
         {data.map((item, index) => (
           <div
