@@ -8,7 +8,7 @@ function Navbar() {
 
   return (
     <nav className="navbar">
-      <div className="brand-title">Brand</div>
+      <div className="brand-title">台中市政府 API寫得好爛</div>
       <a href="#" className="toggle-button" onClick={() => setIsOpen(!isOpen)}>
         <span className="bar"></span>
         <span className="bar"></span>

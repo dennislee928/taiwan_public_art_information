@@ -39,18 +39,18 @@ jobs:
           directory: ./.next
           command: pages deploy ./frontstage/.next --project-name=taiwan-public-art-information --commit-dirty=true
           quiet: false
-  deploy_worker:
-    runs-on: ubuntu-latest
-    needs: build
+deploy_worker:
+  runs-on: ubuntu-latest
+  needs: build
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+  steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
 
-      - name: Deploy Worker to Cloudflare
-        uses: cloudflare/wrangler-action@v3
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          environment: production
-        env:
-          CF_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+    - name: Deploy Worker to Cloudflare
+      uses: cloudflare/wrangler-action@v3
+      with:
+        apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        environment: production
+      env:
+        CF_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
